@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 5dea740a7e765b141b42cd3e6056479e
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Ciscopic
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 8452a8c7c7ca2714696b4793323548bb, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
