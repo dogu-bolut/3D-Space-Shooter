@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     Rigidbody rb;
     Vector3 vec;
-    [Header("Player Configurations")] 
+    [Header("Player Configurations")]
     [SerializeField] GameObject projectile;
     [SerializeField] GameObject Vfx;
     [SerializeField] Transform pos;
@@ -15,7 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] float slope;
     [SerializeField] float waitTime = 1f;
     AudioSource laser;
-    
+
     [Header("Boundaries")]
     [SerializeField] float xMin;
     [SerializeField] float xMax;
@@ -58,11 +56,11 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy")
+        if (other.tag == "Enemy")
         {
             Destroy(gameObject);
             Instantiate(Vfx, transform.position, transform.rotation);
             FindObjectOfType<Spawn>().GameOver();
-        }        
+        }
     }
 }

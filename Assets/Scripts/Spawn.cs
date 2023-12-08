@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -26,14 +25,14 @@ public class Spawn : MonoBehaviour
             Application.Quit();
             Debug.Log("Esc pressed");
         }
-        if(Input.GetKeyDown(KeyCode.R) && overCheck)
-        {            
+        if (Input.GetKeyDown(KeyCode.R) && overCheck)
+        {
             SceneManager.LoadScene("SampleScene");
-        } 
+        }
     }
     IEnumerator create()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         while (true)
         {
             if (overCheck)
@@ -52,10 +51,10 @@ public class Spawn : MonoBehaviour
                 yield return new WaitForSeconds(0.5f);
                 Instantiate(astr3, vec3, Quaternion.identity);
                 yield return new WaitForSeconds(0.5f);
-                
+
             }
             yield return new WaitForSeconds(1);
-            
+
         }
     }
     public void MakeScore(int getScore)
@@ -72,6 +71,6 @@ public class Spawn : MonoBehaviour
     {
         deathText.text = "You died... unfortunately" + "\nYour score = " + scoreText.text;
         overCheck = true;
-        scoreText.gameObject.SetActive(false);        
+        scoreText.gameObject.SetActive(false);
     }
 }
