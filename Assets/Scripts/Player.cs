@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     Rigidbody rb;
-    Vector3 vec;
-    [Header("Player Configurations")] 
+    [Header("Player Configurations")]
     [SerializeField] GameObject projectile;
     [SerializeField] GameObject Vfx;
     [SerializeField] Transform pos;
@@ -15,21 +12,23 @@ public class Player : MonoBehaviour
     [SerializeField] float slope;
     [SerializeField] float waitTime = 1f;
     AudioSource laser;
-    
-    [Header("Boundaries")]
-    [SerializeField] float xMin;
-    [SerializeField] float xMax;
-    [SerializeField] float zMin;
-    [SerializeField] float zMax;
+    float minX, maxX, minZ, maxZ;
     float fireTiming = 0f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         laser = GetComponent<AudioSource>();
+        float padding = 1.0f;
+        minX = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + padding;
+        maxX = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x - padding;
+        minZ = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).z + padding;
+        maxZ = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).z - padding;
     }
     private void Update()
     {
+        rb.position = new Vector3(rb.position.x, 0, rb.position.z);
+        Move();
         if (Input.GetButton("Fire1") && Time.time > fireTiming)
         {
             fireTiming = Time.time + waitTime;
@@ -37,32 +36,29 @@ public class Player : MonoBehaviour
             laser.Play();
         }
     }
-
-    void FixedUpdate()
-    {
-        Move();
-    }
     private void Move()
     {
         var deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * xMoveSpeed;
         var deltaZ = Input.GetAxis("Vertical") * Time.deltaTime * zMoveSpeed;
-        var newXPos = Mathf.Clamp(transform.position.x + deltaX, xMin, xMax);
-        var newZPos = Mathf.Clamp(transform.position.z + deltaZ, zMin, zMax);
-        vec = new Vector3(deltaX, 0, deltaZ);
 
-        rb.velocity = vec;
+        Vector3 newPosition = rb.position + new Vector3(deltaX, 0, deltaZ);
 
-        rb.position = new Vector3(newXPos, 0, newZPos);
+        float clampedX = Mathf.Clamp(newPosition.x, minX, maxX);
+        float clampedZ = Mathf.Clamp(newPosition.z, minZ, maxZ);
+
+        rb.velocity = new Vector3(clampedX - rb.position.x, 0, clampedZ - rb.position.z);
+
+        rb.position = new Vector3(clampedX, 0, clampedZ);
 
         rb.rotation = Quaternion.Euler(0, 0, rb.velocity.x * -slope);
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy")
+        if (other.tag == "Enemy")
         {
             Destroy(gameObject);
             Instantiate(Vfx, transform.position, transform.rotation);
             FindObjectOfType<Spawn>().GameOver();
-        }        
+        }
     }
 }

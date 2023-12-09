@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 
 public class ScenePersist : MonoBehaviour
-{    
+{
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
@@ -10,5 +10,9 @@ public class ScenePersist : MonoBehaviour
     public void LoadGame()
     {
         SceneManager.LoadScene("SampleScene");
+    }
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
