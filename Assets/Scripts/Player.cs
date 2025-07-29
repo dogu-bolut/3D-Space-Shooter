@@ -48,11 +48,11 @@ public class Player : MonoBehaviour
         var newZPos = Mathf.Clamp(transform.position.z + deltaZ, zMin, zMax);
         vec = new Vector3(deltaX, 0, deltaZ);
 
-        rb.velocity = vec;
+        rb.linearVelocity = vec;
 
         rb.position = new Vector3(newXPos, 0, newZPos);
 
-        rb.rotation = Quaternion.Euler(0, 0, rb.velocity.x * -slope);
+        rb.rotation = Quaternion.Euler(0, 0, rb.linearVelocity.x * -slope);
     }
     private void OnTriggerEnter(Collider other)
     {

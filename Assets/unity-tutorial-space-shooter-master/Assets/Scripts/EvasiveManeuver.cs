@@ -19,7 +19,7 @@ public class EvasiveManeuver : MonoBehaviour
 	void Start()
 	{
 		rb = GetComponent<Rigidbody>();
-		currentSpeed = rb.velocity.z;
+		currentSpeed = rb.linearVelocity.z;
 
 		StartCoroutine(Evade());
 	}
@@ -38,8 +38,8 @@ public class EvasiveManeuver : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		float newManeuver = Mathf.MoveTowards(rb.velocity.x, targetManeuver, Time.deltaTime * smoothing);
-		rb.velocity = new Vector3(newManeuver, 0.0f, currentSpeed);
+		float newManeuver = Mathf.MoveTowards(rb.linearVelocity.x, targetManeuver, Time.deltaTime * smoothing);
+		rb.linearVelocity = new Vector3(newManeuver, 0.0f, currentSpeed);
 
 		rb.position = new Vector3(
 			Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),
@@ -50,7 +50,7 @@ public class EvasiveManeuver : MonoBehaviour
 		rb.rotation = Quaternion.Euler(
 			0.0f,
 			0.0f,
-			rb.velocity.x * -tilt
+			rb.linearVelocity.x * -tilt
 		);
 	}
 }

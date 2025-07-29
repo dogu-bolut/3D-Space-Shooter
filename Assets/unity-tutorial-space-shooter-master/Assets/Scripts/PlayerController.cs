@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
 		float moveVertical = Input.GetAxis("Vertical");
 
 		Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-		rb.velocity = movement * speed;
+		rb.linearVelocity = movement * speed;
 
 		rb.position = new Vector3(
 			Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
 		rb.rotation = Quaternion.Euler(
 			0.0f,
 			0.0f,
-			rb.velocity.x * -tilt
+			rb.linearVelocity.x * -tilt
 		);
 	}
 }

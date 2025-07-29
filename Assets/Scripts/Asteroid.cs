@@ -12,7 +12,7 @@ public class Asteroid : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.angularVelocity = Random.insideUnitSphere * rotateSpeed;
-        rb.velocity = transform.forward * moveSpeed;
+        rb.linearVelocity = transform.forward * moveSpeed;
     }
     public void OnTriggerEnter(Collider other)
     {
